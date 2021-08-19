@@ -24831,11 +24831,11 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.NinePatch,
 	cr.plugins_.Audio,
 	cr.plugins_.Browser,
-	cr.plugins_.Mouse,
 	cr.plugins_.Keyboard,
 	cr.plugins_.LocalStorage,
-	cr.plugins_.Sprite,
+	cr.plugins_.Mouse,
 	cr.plugins_.TiledBg,
+	cr.plugins_.Sprite,
 	cr.plugins_.Spritefont2,
 	cr.plugins_.Touch,
 	cr.behaviors.Rotate,
@@ -24960,7 +24960,6 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.exps.layeropacity,
 	cr.system_object.prototype.exps.layerscale,
 	cr.plugins_.Sprite.prototype.acts.SetPosToObject,
-	cr.system_object.prototype.cnds.Compare,
 	cr.system_object.prototype.cnds.LayerCmpOpacity,
 	cr.system_object.prototype.acts.Signal
 ];};
