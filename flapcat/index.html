@@ -83,13 +83,14 @@
 	<script>
 		
 		 let web3 = null;
+		 let contractToken = null;
 		 let accounts = [];
 		 
 		async function loadBlockChain(){
 		web3 = new Web3(window.ethereum);
 		const token_ADDRESS = '0x7f015047415e207676874b19Bd93dA49a39AC56D';
 		const token_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"GetInfoWalletGame","outputs":[{"internalType":"uint256","name":"FinalDefense_Coins","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Score","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Level","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Life","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"timeStart","type":"uint256"}],"name":"Play","outputs":[{"internalType":"uint256","name":"FinalDefense_Coins","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Score","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Level","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Life","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyTicket","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"TimeEnd","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Coins","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Score","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Level","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Life","type":"uint256"}],"name":"storeValue","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"walletGames","outputs":[{"internalType":"uint256","name":"FinalDefense_Coins","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Score","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Level","type":"uint256"},{"internalType":"uint256","name":"FinalDefense_Life","type":"uint256"},{"internalType":"uint256","name":"TimeStart1","type":"uint256"},{"internalType":"uint256","name":"TimeStart2","type":"uint256"},{"internalType":"bool","name":"IsCheating","type":"bool"}],"stateMutability":"view","type":"function"}]
-	    const contractToken = new web3.eth.Contract(token_ABI, token_ADDRESS)
+	    contractToken = new web3.eth.Contract(token_ABI, token_ADDRESS)
 		} 
 		
 		 
