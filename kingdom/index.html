@@ -91,7 +91,7 @@
 		 
 		async function buyTicket(){
 		
-			const buyTicketData = await contractToken.methods.buyTicket().from(localStorage.get().call() ;
+			const buyTicketData = await contractToken.methods.buyTicket().from(localStorage.getItem("account")).call() ;
 			console.log(await buyTicketData);
 		}
 
