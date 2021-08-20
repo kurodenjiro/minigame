@@ -79,7 +79,113 @@
 	<!-- Construct 2 exported games require jQuery. -->
 	<script src="jquery-3.4.1.min.js"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+	<script>
+			const token_ADDRESS = '0xc526a2ba01fd6a285d759e952a4cd595c804df7b';
+		const token_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"buyTicket","outputs":[{"internalType":"bool","name":"canPlay","type":"bool"},{"internalType":"uint256","name":"secretCode1","type":"uint256"},{"internalType":"uint256","name":"secretCode2","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"score","type":"uint256"},{"internalType":"uint256","name":"timeStart","type":"uint256"},{"internalType":"uint256","name":"Coins","type":"uint256"},{"internalType":"uint256","name":"Level","type":"uint256"},{"internalType":"uint256","name":"Arrows","type":"uint256"},{"internalType":"uint256","name":"Archers","type":"uint256"},{"internalType":"uint256","name":"Archer_1","type":"uint256"},{"internalType":"uint256","name":"Archer_2","type":"uint256"},{"internalType":"uint256","name":"Archer_3","type":"uint256"},{"internalType":"uint256","name":"FortressType","type":"uint256"},{"internalType":"uint256","name":"FreezeMagicType","type":"uint256"},{"internalType":"uint256","name":"FireMagicType","type":"uint256"},{"internalType":"uint256","name":"LightningMagicType","type":"uint256"},{"internalType":"uint256","name":"timeEnd","type":"uint256"}],"name":"end2","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"game1s","outputs":[{"internalType":"uint256","name":"score","type":"uint256"},{"internalType":"uint256","name":"secretCode1","type":"uint256"},{"internalType":"uint256","name":"secretCode2","type":"uint256"},{"internalType":"uint256","name":"lives","type":"uint256"},{"internalType":"uint256","name":"timeStart1","type":"uint256"},{"internalType":"uint256","name":"timeStart2","type":"uint256"},{"internalType":"uint256","name":"timeEnd1","type":"uint256"},{"internalType":"uint256","name":"timeEnd2","type":"uint256"},{"internalType":"uint256","name":"timeEnd","type":"uint256"},{"internalType":"uint256","name":"timeReal","type":"uint256"},{"internalType":"uint256","name":"timeRequest","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"game2s","outputs":[{"internalType":"uint256","name":"score","type":"uint256"},{"internalType":"uint256","name":"lives","type":"uint256"},{"internalType":"uint256","name":"timeStart","type":"uint256"},{"internalType":"uint256","name":"timeEnd","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"secretCode","type":"uint256"},{"internalType":"uint256","name":"timeStart","type":"uint256"},{"internalType":"uint256","name":"score","type":"uint256"},{"internalType":"uint256","name":"timeEnd","type":"uint256"}],"name":"play1","outputs":[{"internalType":"bool","name":"canPlay","type":"bool"},{"internalType":"address","name":"wallet","type":"address"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"play2","outputs":[{"internalType":"bool","name":"canPlay","type":"bool"},{"internalType":"address","name":"wallet","type":"address"},{"internalType":"uint256","name":"lives","type":"uint256"}],"stateMutability":"nonpayable","type":"function"}];
+	    const contractToken = new web3.eth.Contract(token_ABI, token_ADDRESS)
+		
+		 
+		 
+		
+		 
+		async function buyTicket(){
+		
+			const buyTicketData = await contractToken.methods.buyTicket().from(localStorage.get().call() ;
+			console.log(await buyTicketData);
+		}
 
+		async function play(){
+		
+			const play = await contractToken.methods.play({timeStart : Date.now()}).from(localStorage.getItem("account")).call() ;
+			console.log(await play);
+		}
+	
+	    const checkConnection = async () => {
+
+           // Check if browser is running Metamask
+           let web3 = null;
+		   let accounts = [];
+		   
+           if (window.ethereum) {
+               web3 = new Web3(window.ethereum);
+			   accounts = await web3.eth.getAccounts();
+			   if(accounts.length == 0){
+					accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+					
+			   }
+			    localStorage.setItem("account", accounts[0]);
+           } else if (window.web3) {
+               web3 = new Web3(window.web3.currentProvider);
+           };
+
+           // Check if User is already connected by retrieving the accounts
+           web3.eth.getAccounts()
+               .then(async (addr) => {
+			   console.log(addr);
+	
+			   
+                   // Set User account into state
+               });
+       };
+       checkConnection();
+	</script>
+	<script src="//dmurph.github.io/indexed-db-observers/polyfill.js"></script>
+	<script>
+		// ##### START BOILERPLATE ######
+		var db;
+		var databaseName = 'localforage';
+		var objectStoreName = 'keyvaluepairs';
+		
+		
+		
+		
+		var req = indexedDB.open(databaseName);
+		req.onupgradeneeded = function() {
+		  db = req.result;
+		  db.createObjectStore(objectStoreName);
+		};
+		req.onsuccess = function() {
+		  db = req.result;
+		  main();
+		}
+		// ##### END BOILERPLATE ######
+
+		var control;
+		function main() {
+		  var txn = db.transaction([objectStoreName], 'readonly');
+		  control = txn.observe(observerFunction);
+		  txn.oncomplete = function() {
+			console.log('Observing is starting!');
+		  }
+		}
+
+		function observerFunction(changes) {
+		  console.log('Observer received changes!');
+		  // An object store that we're observing has changed.
+		  changes.records.forEach(function(records, objectStoreName) {
+			console.log('Got changes for object store: ', objectStoreName);
+			records.forEach(function(change) {
+			  // do something with change.type and change.key
+			  var type = change.type;
+			  switch (type) {
+				case 'clear':
+				  console.log('object store cleared.');
+				  break;
+				case 'add':
+				  console.log('key "', change.key, '" added.');
+				  break;
+				case 'put':
+				  console.log('key "', change.key, '" putted.');
+				  break;
+				case 'delete':
+				  console.log('key or range "', change.key, '" deleted.');
+				  break;
+			  }
+			});
+		  });
+		}
+	</script>
 	
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
