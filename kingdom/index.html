@@ -82,6 +82,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 	
 	<script>
+		var Flag = false;
 		
 		const web3 = new Web3(window.ethereum);
 		const token_ADDRESS = '0xdF49B2b8772A497bFAb2775c74837BC3fE83a2d5';
@@ -90,34 +91,19 @@
 		 
 		async function loadBlockChain(){
 		
-		//const play = await contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")});
-
-		//const buyTicket = await contractToken.methods.buyTicket().call({from:localStorage.getItem("account")}); //
 		const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
-		//const storeValue = await contractToken.methods.storeValue( 3,4,5,6,4, 3,4,5,6,4, 3,4,5).send({from:localStorage.getItem("account")}) ;
-		//console.log(await play);
-		
-		//console.log(await buyTicket);
-		//console.log(await storeValue);
 		
 		console.log(await getInfo );
 
 		
 		
 		
-		//click play and send request Play to lost lifePoint
-		//Check Life . if have life . then add indexedDB life = 3 then play
-		//Check Buy , call to know can buy ticket , send to register ticket
-		//when playing , if user lost all life then storeValue
-		
 			if(getInfo.FinalDefense_Life>0){
 			localforage.clear().then(function() {
-						// Run this code once the database has been entirely deleted.
 						
 				localforage.setItem('FinalDefense_Life', 0, function (err) {});
 						console.log('Database is now empty.');
 					}).catch(function(err) {
-						// This code runs if there were any errors
 						console.log(err);
 			});
 			}else{
@@ -126,25 +112,41 @@
 				});
 				 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
 				 if(isBuy){
-					buyTicket = await contractToken.methods.buyTicket().call({from:localStorage.getItem("account")});
-					 if(buyTicket){
-					  await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")});
-					 }
+					buyTicket = await contractToken.methods.buyTicket().call({from:localStorage.getItem("account")}).then((result) => {
+					 contractToken.methods.buyTicket().send({from:localStorage.getItem("account")});
+						  console.log("Success! Got result: " + result);
+						}).catch((err) => {
+						  alert("You bought the most recent one. wait for the next turn");
+						});
+		
 					
 				 }else{
-				  alert("You bought the most recent one. wait for the next turn")
+				  alert("See You Again !")
 				 }
 			}
 		}
 		
 		async function play(){
-		const play = await contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")});
 		
-			if(play.status){
-			
-			const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
-	localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
-			}
+		
+		const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
+		
+		if(getInfo.FinalDefense_Life > 0 && Flag){
+		
+			 await contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")}).then((result) => {
+					 		localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
+							alert("Now ! Let's fight");
+						  console.log("Success! Got result: " + result);
+						}).catch((err) => {
+						  alert("OOps!");
+						}); ;
+		
+		}else{
+		alert("You don't have enough Life Point")
+		}
+		
+		
+	
 		}
 		async function store(){
 	const storeValue = await contractToken.methods.storeValue( 3,4,5,6,4, 3,4,5,6,4, 3,4,5).send({from:localStorage.getItem("account")}) ;
