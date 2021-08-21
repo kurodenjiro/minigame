@@ -189,6 +189,7 @@
 					   localStorage.removeItem("account");
 					     try {
 									accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+									console.log(accounts);
 									if(accounts.length > 0){
 									
 								localStorage.setItem("account", accounts[0]);
@@ -205,7 +206,9 @@
             			
 						
 
-            		   }
+            		   }else{
+					   localStorage.setItem("account", accounts[0]);
+					   }
             		    
                       } else if (window.web3) {
                           web3 = new Web3(window.web3.currentProvider);
