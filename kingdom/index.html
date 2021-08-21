@@ -109,12 +109,9 @@
             		});
             		}else{
             			localforage.setItem('FinalDefense_Life', 0, function (err) {});
-						if(localStorage.getItem("account")  === null ){
+						
+						
 				
-            			
-						}else{
-						buy();
-						}
 
             		}
             	}
@@ -125,7 +122,7 @@
 						 console.log(receipt)
 							if(receipt){
 							alert("Done")
-							location.reload();
+							location.reload(true);
 							}
 							})
 													.on('error', function(error, receipt) {
@@ -152,7 +149,7 @@
 									}).on('confirmation', function(confirmationNumber, receipt){	
 									}).on('error', function(error, receipt) {
 									alert("Oops!");
-									location.reload();
+									location.reload(true);
 									});									
 
 
@@ -169,7 +166,7 @@
             	async function store(){
             const storeValue = await contractToken.methods.storeValue( 3,4,5,6,4, 3,4,5,6,4, 3,4,5).send({from:localStorage.getItem("account")})
 									.on('receipt', function(error, receipt) {
-									location.reload();
+									location.reload(true);
 									}).on('confirmation', function(confirmationNumber, receipt){	
 									}).on('error', function(error, receipt) {
 									alert("Oops!");
@@ -193,13 +190,16 @@
 									if(accounts.length > 0){
 									
 								localStorage.setItem("account", accounts[0]);
+								buy();
 									}
 									
 							  } catch (error) {
 							  
-								localStorage.removeItem("account");
-								location.reload();
+								
 								if (error.code === 4001) {
+								alert("Please Connect Your Wallet");
+									localStorage.removeItem("account");
+									location.reload(true);
 								}
 
 							  }
@@ -219,6 +219,7 @@
                           .then(async (addr) => {
 						   if(addr.length !== 0){
 						localStorage.setItem("account", addr[0]);
+						buy();
 							}
                           });
                   };
