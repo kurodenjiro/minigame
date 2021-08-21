@@ -119,10 +119,12 @@
 
             				
 													try {
-														await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).then((result) => {
-																		if(result.status){
+														await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).on('confirmation', function(confirmationNumber, receipt){
+														console.log(receipt);
+																		if(receipt){
 																			location.reload();
 																			localforage.setItem('FinalDefense_Life',parseInt(FinalDefense_Life) , function (err) {});
+																			alert("Done ")
 																		}else{
 
 																			alert("You have already purchased the number of Life Point please wait for the next ")
@@ -146,13 +148,10 @@
             	if(getInfo.FinalDefense_Life > 0 ){
 
 				
-            						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).then((result) => {
-            							if(result.status){
-            							
-            							}
-            						});
+            						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).on('error', function(error, receipt) {
+									location.reload();
+											});											
 
-            	}else{
 
             	}
 
