@@ -118,18 +118,21 @@
 
 
             				
+													try {
+														await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).then((result) => {
+																		if(result.status){
+																			location.reload();
+																			localforage.setItem('FinalDefense_Life',parseInt(FinalDefense_Life) , function (err) {});
+																		}else{
 
+																			alert("You have already purchased the number of Life Point please wait for the next ")
+																		}
 
-            						const regTicket = 	await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).then((result) => {
-            							if(result.status){
-										
-            								localforage.setItem('FinalDefense_Life',parseInt(FinalDefense_Life) , function (err) {});
-            							}else{
+																});
+													} catch (e) {
+													alert("You have already purchased the number of Life Point please wait for the next ")
+													}
 
-            								alert("You have already purchased the number of Life Point please wait for the next ")
-            							}
-
-            					});
             			}
             			 
 
