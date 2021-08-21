@@ -131,7 +131,7 @@
 		
 		const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
 		
-		if(getInfo.FinalDefense_Life > 0 && Flag){
+		if(getInfo.FinalDefense_Life > 0){
 		
 			 await contractToken.methods.Play( Date.now()).call({from:localStorage.getItem("account")}).then((result) => {
 							contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")})
