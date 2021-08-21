@@ -108,11 +108,11 @@
             		});
             		}else{
             			localforage.setItem('FinalDefense_Life', 0, function (err) {});
-            			buy();
+            			buy(getInfo.FinalDefense_Life);
 
             		}
             	}
-            	async function buy(){
+            	async function buy(FinalDefense_Life){
             				 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
             			 if(isBuy){
 
@@ -122,7 +122,8 @@
 
             						const regTicket = 	await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).then((result) => {
             							if(result.status){
-            								localforage.setItem('FinalDefense_Life',parseInt(getInfo.FinalDefense_Life) , function (err) {});
+										
+            								localforage.setItem('FinalDefense_Life',parseInt(FinalDefense_Life) , function (err) {});
             							}else{
 
             								alert("You have already purchased the number of Life Point please wait for the next ")
