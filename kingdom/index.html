@@ -143,7 +143,6 @@
 		
 		if(getInfo.FinalDefense_Life > 0 ){
 		
-			localforage.setItem('FinalDefense_Life', 0, function (err) {Flag = false;});
 			 
 							contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")}).then((result) => {
 								if(result.status){
