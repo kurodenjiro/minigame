@@ -214,14 +214,7 @@
                           web3 = new Web3(window.web3.currentProvider);
                       };
 
-                      // Check if User is already connected by retrieving the accounts
-                      web3.eth.getAccounts()
-                          .then(async (addr) => {
-						   if(addr.length !== 0){
-						localStorage.setItem("account", addr[0]);
-						buy();
-							}
-                          });
+                  
                   };
 				  
 				    checkConnection();
