@@ -91,7 +91,7 @@
 
             	async function loadBlockChain(){
 				
-				
+				accounts = await web3.eth.getAccounts();
             	const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
 
             	console.log(await getInfo );
@@ -108,17 +108,23 @@
             					console.log(err);
             		});
             		}else{
+					
             			localforage.setItem('FinalDefense_Life', 0, function (err) {});
 						
 						
 				
 
             		}
+					if(getInfo.FinalDefense_Life == 0 && accounts.length>0){
+					buy(accounts[0])
+					}
+					
+					
             	}
-            	async function buy(){
+            	async function buy(address){
             				 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
             			 if(isBuy){
-						 await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).on('receipt', function(receipt){
+						 await contractToken.methods.buyTicket().send({from:address}).on('receipt', function(receipt){
 						 console.log(receipt)
 							if(receipt){
 							alert("Done")
@@ -190,7 +196,7 @@
 									if(accounts.length > 0){
 									
 								localStorage.setItem("account", accounts[0]);
-								buy();
+								
 									}
 									
 							  } catch (error) {
