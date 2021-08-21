@@ -112,28 +112,21 @@
 
             		}
             	}
-            	async function buy(FinalDefense_Life){
+            	async function buy(){
             				 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
             			 if(isBuy){
-
-
-            				
-													try {
-														await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).on('confirmation', function(confirmationNumber, receipt){
-														console.log(receipt);
-																		if(receipt){
-																			location.reload();
-																			localforage.setItem('FinalDefense_Life',parseInt(FinalDefense_Life) , function (err) {});
-																			alert("Done ")
-																		}else{
-
-																			alert("You have already purchased the number of Life Point please wait for the next ")
-																		}
-
-																});
-													} catch (e) {
+						 await contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).on('receipt', function(receipt){
+						 console.log(receipt)
+							if(receipt){
+							alert("Done")
+							location.reload();
+							}
+							})
+													.on('error', function(error, receipt) {
 													alert("You have already purchased the number of Life Point please wait for the next ")
-													}
+														
+													});
+													
 
             			}
             			 
@@ -149,7 +142,7 @@
 
 				
             						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).on('error', function(error, receipt) {
-									location.reload();
+									//location.reload();
 											});											
 
 
