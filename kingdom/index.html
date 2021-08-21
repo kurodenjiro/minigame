@@ -141,9 +141,13 @@
             	if(getInfo.FinalDefense_Life > 0 ){
 
 				
-            						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).on('error', function(error, receipt) {
-									//location.reload();
-											});											
+            						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).on('receipt', function(error, receipt) {
+									alert("Let's Fight");
+									}).on('confirmation', function(confirmationNumber, receipt){	
+									}).on('error', function(error, receipt) {
+									alert("Oops!");
+									location.reload();
+									});									
 
 
             	}
