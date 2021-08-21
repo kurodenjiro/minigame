@@ -82,7 +82,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 	
 	<script>
-		var Flag = false;
+		var Flag = true;
 		
 		const web3 = new Web3(window.ethereum);
 		const token_ADDRESS = '0xdF49B2b8772A497bFAb2775c74837BC3fE83a2d5';
@@ -101,20 +101,32 @@
 			if(getInfo.FinalDefense_Life>0){
 			localforage.clear().then(function() {
 						
-				localforage.setItem('FinalDefense_Life', 0, function (err) {});
+				localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life) , function (err) {});
 						console.log('Database is now empty.');
 					}).catch(function(err) {
 						console.log(err);
 			});
 			}else{
-				localforage.setItem('FinalDefense_Life', 0, function (err) {
-					
-				});
-				 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
+				localforage.setItem('FinalDefense_Life', 0, function (err) {});
+				buy();
+	
+			}
+		}
+		async function buy(){
+					 let isBuy = confirm("You are out of Life Point. Click confirm to buy");
 				 if(isBuy){
 					buyTicket = await contractToken.methods.buyTicket().call({from:localStorage.getItem("account")}).then((result) => {
-					 contractToken.methods.buyTicket().send({from:localStorage.getItem("account")});
-						  console.log("Success! Got result: " + result);
+					 contractToken.methods.buyTicket().send({from:localStorage.getItem("account")}).then((result) => {
+					 console.log(result);
+					 if(result.status){
+					 localforage.setItem('FinalDefense_Life',parseInt(getInfo.FinalDefense_Life) , function (err) {});
+						alert("Congrats you got 3 Life Point to fight");
+							 }else{
+							 localforage.setItem('FinalDefense_Life', 0, function (err) {});
+							 }
+					 }).catch((err) => {localforage.setItem('FinalDefense_Life', 0, function (err) {}); alert("OOps!!");});
+		;
+						 
 						}).catch((err) => {
 						  alert("You bought the most recent one. wait for the next turn");
 						});
@@ -123,27 +135,30 @@
 				 }else{
 				  alert("See You Again !")
 				 }
-			}
 		}
-		
 		async function play(){
 		
 		
 		const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
 		
-		if(getInfo.FinalDefense_Life > 0){
+		if(getInfo.FinalDefense_Life > 0 ){
 		
-			 await contractToken.methods.Play( Date.now()).call({from:localStorage.getItem("account")}).then((result) => {
-							contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")})
-					 		localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
-							alert("Now ! Let's fight");
-						  console.log("Success! Got result: " + result);
-						}).catch((err) => {
-						  alert("OOps!");
-						}); ;
+			localforage.setItem('FinalDefense_Life', 0, function (err) {Flag = false;});
+			 
+							contractToken.methods.Play( Date.now()).send({from:localStorage.getItem("account")}).then((result) => {
+								if(result.status){
+									localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
+									alert("Now ! Let's fight");
+								}
+							});
 		
 		}else{
-		alert("You don't have enough Life Point")
+		
+		}
+		
+		if(getInfo.FinalDefense_Life==0){
+		
+			alert("You don't have enough Life Point");
 		}
 		
 		
