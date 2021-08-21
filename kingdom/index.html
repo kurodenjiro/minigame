@@ -138,14 +138,13 @@
 
 
             	const getInfo = await contractToken.methods.GetInfoWalletGame ( Date.now()).call({from:localStorage.getItem("account")}) ;
-
+				localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
             	if(getInfo.FinalDefense_Life > 0 ){
 
-
+				
             						contractToken.methods.Play(Date.now()).send({from:localStorage.getItem("account")}).then((result) => {
             							if(result.status){
-            								localforage.setItem('FinalDefense_Life', parseInt(getInfo.FinalDefense_Life), function (err) {});
-            								alert("Now ! Let's fight");
+            							
             							}
             						});
 
