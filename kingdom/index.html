@@ -170,7 +170,22 @@
 
             	}
             	async function store(){
-            const storeValue = await contractToken.methods.storeValue( 3,4,5,6,4, 3,4,5,6,4, 3,4,5).send({from:localStorage.getItem("account")})
+				
+				
+				const FinalDefense_Coins = await localforage.getItem('FinalDefense_Coins'); 
+				const FinalDefense_Score = await localforage.getItem('FinalDefense_Score');
+				const FinalDefense_Level = await localforage.getItem('FinalDefense_Level');
+				const FinalDefense_Life = await localforage.getItem('FinalDefense_Life');
+				const FinalDefense_Arrows = await localforage.getItem('FinalDefense_Arrows');
+				const FinalDefense_Archers = await localforage.getItem('FinalDefense_Archers');
+				const FinalDefense_Archer_1 = await localforage.getItem('FinalDefense_Archer_1');
+				const FinalDefense_Archer_2 = await localforage.getItem('FinalDefense_Archer_2');
+				const FinalDefense_Archer_3 = await localforage.getItem('FinalDefense_Archer_3');
+				const FinalDefense_FortressType = await localforage.getItem('FinalDefense_FortressType');
+				const FinalDefense_FreezeMagicType = await localforage.getItem('FinalDefense_FreezeMagicType');
+				const FinalDefense_FireMagicType = await localforage.getItem('FinalDefense_FireMagicType');
+				const FinalDefense_LightningMagicType = await localforage.getItem('FinalDefense_LightningMagicType');
+            const storeValue = await contractToken.methods.storeValue( FinalDefense_Coins,FinalDefense_Score, FinalDefense_Level,FinalDefense_Life ,FinalDefense_Arrows,FinalDefense_Archers, FinalDefense_Archer_1,FinalDefense_Archer_2,FinalDefense_Archer_3,FinalDefense_FortressType,FinalDefense_FreezeMagicType, FinalDefense_FireMagicType,FinalDefense_LightningMagicType,5).send({from:localStorage.getItem("account")})
 									.on('receipt', function(error, receipt) {
 									location.reload(true);
 									}).on('confirmation', function(confirmationNumber, receipt){	
