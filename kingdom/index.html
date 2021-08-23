@@ -79,11 +79,11 @@
 	<!-- Construct 2 exported games require jQuery. -->
 	<script src="jquery-3.4.1.min.js"></script>
 <script src="https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js"></script>
-<script>	async function clear(){
-await localforage.clear();
-}
+<script>	
+$( document ).ready(function() {
+    localforage.clear();
+});
 
-clear();
 
 </script>
 	
