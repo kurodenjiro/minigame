@@ -1,5 +1,5 @@
 ﻿{
-	"version": 1629513348,
+	"version": 1601311382,
 	"fileList": [
 		"data.js",
 		"c2runtime.js",
@@ -8,9 +8,9 @@
 		"images/cursor-sheet0.png",
 		"images/cursorhover-sheet0.png",
 		"images/sunlight-sheet0.png",
-		"images/audioline-sheet0.png",
+		"images/endmusic-sheet0.png",
 		"images/framepaused-sheet0.png",
-		"images/frameaudio-sheet0.png",
+		"images/areamusic-sheet0.png",
 		"images/slidermusic-sheet0.png",
 		"images/framesound-sheet0.png",
 		"images/bargui.png",
