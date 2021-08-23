@@ -40,7 +40,13 @@
     </style>
 	
 <script src="https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js"></script>
-<script>	localforage.clear() ;</script>
+<script>	async function clear(){
+await localforage.clear()
+}
+
+clear();
+
+</script>
 </head> 
  
 <body> 
