@@ -84,73 +84,9 @@
     <!-- The runtime script.  You can rename it, but don't forget to rename the reference here as well.
     This file will have been minified and obfuscated if you enabled "Minify script" during export. -->
 	<script src="c2runtime.js"></script>
-	<script src="https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js"></script>
-        <script src="//dmurph.github.io/indexed-db-observers/polyfill.js"></script>
-        <script>
-            // ##### START BOILERPLATE ######
-            var db;
-            var databaseName = "localforage";
-            var objectStoreName = "keyvaluepairs";
-            var req = indexedDB.open(databaseName);
-            req.onupgradeneeded = function () {
-                db = req.result;
-                db.createObjectStore(objectStoreName);
-            };
-            req.onsuccess = function () {
-                db = req.result;
-                main();
-            };
-            // ##### END BOILERPLATE ######
-
-            var control;
-            function main() {
-                var txn = db.transaction([objectStoreName], "readonly");
-                control = txn.observe(observerFunction);
-                txn.oncomplete = function () {
-                    console.log("Observing is starting!");
-                };
-            }
-
-            function observerFunction(changes) {
-                console.log("Observer received changes!");
-                // An object store that we're observing has changed.
-                changes.records.forEach(function (records, objectStoreName) {
-                    console.log("Got changes for object store: ", objectStoreName);
-                    records.forEach(function (change) {
-                        // do something with change.type and change.key
-                        var type = change.type;
-                        switch (type) {
-                            case "clear":
-                                console.log("object store cleared.");
-                                break;
-                            case "add":
-                                console.log('key "', change.key, '" added.');
-                                break;
-                            case "put":
-                                if (change.key == "FinalDefense_Level") {
-									localforage.getItem('FinalDefense_Level').then(function(value) {
-									if(value== 5){
-									
-										location.reload(true);
-									}
-										// This code runs once the value has been loaded
-										// from the offline store.
-										console.log(value);
-									}).catch(function(err) {
-										// This code runs if there were any errors
-										console.log(err);
-									});
-                                console.log('key "', change.key, '" putted.');
-                                break;
-                            case "delete":
-                                console.log('key or range "', change.key, '" deleted.');
-                                break;
-                        }
-                    });
-                });
-            }
-        </script>
+<script src="https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js"></script>
     <script>
+	localforage.clear() 
 		// Start the Construct 2 project running on window load.
 		jQuery(document).ready(function ()
 		{			
