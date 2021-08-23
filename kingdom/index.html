@@ -86,10 +86,10 @@
 	<script src="c2runtime.js"></script>
 <script src="https://raw.githubusercontent.com/mozilla/localForage/master/dist/localforage.min.js"></script>
     <script>
-	localforage.clear() 
+	
 		// Start the Construct 2 project running on window load.
 		jQuery(document).ready(function ()
-		{			
+		{			localforage.clear() 
 			// Create new runtime using the c2canvas
 			cr_createRuntime("c2canvas");
 		});
